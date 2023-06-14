@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:todo_app_nosetstate/model/todo_model.dart';
+import 'package:todo_app_nosetstate/pages/details_page.dart';
 
 class TodoApp extends StatefulWidget {
   @override
@@ -41,9 +42,10 @@ class _TodoAppState extends State<TodoApp> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      drawer: Drawer(),
       appBar: AppBar(
         centerTitle: true,
-        title: Text('Todo App'),
+        title: Text('To Do'),
       ),
       body: StreamBuilder<QuerySnapshot>(
         stream: todosStream,
@@ -93,7 +95,14 @@ class _TodoAppState extends State<TodoApp> {
                       _toggleTodoState(todo.id, value ?? false);
                     },
                   ),
-                  onTap: () {},
+                  onTap: () {
+                    Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) => DetailsPage(
+                                  index: todo,
+                                )));
+                  },
                 ),
               );
             },
